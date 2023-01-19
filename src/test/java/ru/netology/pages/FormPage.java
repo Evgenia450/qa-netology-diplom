@@ -95,21 +95,4 @@ public class FormPage {
     public void checkCVCErrorIndication() {
         cvc.$(indicationClass).should(exist).shouldHave(exactText("Неверный формат"));
     }
-
-    public void clearTheForm() {
-        card.$(inputClass).sendKeys(Keys.CONTROL + "A");
-        card.$(inputClass).sendKeys(Keys.BACK_SPACE);
-
-        month.$(inputClass).sendKeys(Keys.CONTROL + "A");
-        month.$(inputClass).sendKeys(Keys.BACK_SPACE);
-
-        year.$(inputClass).sendKeys(Keys.CONTROL + "A");
-        year.$(inputClass).sendKeys(Keys.BACK_SPACE);
-
-        cardOwner.$(inputClass).sendKeys(Keys.CONTROL + "A");
-        cardOwner.$(inputClass).sendKeys(Keys.BACK_SPACE);
-
-        cvc.$(inputClass).sendKeys(Keys.CONTROL + "A");
-        cvc.$(inputClass).sendKeys(Keys.BACK_SPACE);
-    }
 }

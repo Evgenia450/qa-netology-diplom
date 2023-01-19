@@ -68,29 +68,7 @@ public class SQLHelper {
             status = runner.query(conn, statusQuery, new ScalarHandler<>());
         }
         return status;
-
     }
-
-    /*
-    @SneakyThrows
-    public static String getLastStatusFrom(String tableName) {
-        if (tableExists(tableName)) {
-            var statusQuery = "SELECT status FROM " + tableName + " ORDER BY created DESC LIMIT 1;";
-            String status;
-
-            try (
-                    var conn = DriverManager.getConnection(urlMySQL, userDB, passwordDB);
-            ) {
-                status = runner.query(conn, statusQuery, new ScalarHandler<>());
-            }
-            return status;
-        } else {
-            return null;
-        }
-    }
-
-     */
-
 
     @SneakyThrows
     public static void cleanDatabase() {

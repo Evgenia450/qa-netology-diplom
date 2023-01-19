@@ -24,11 +24,9 @@ public class PaymentTest {
     final String ordersTable = "order_entity";
     final String paymentsTable = "payment_entity";
 
-
     @BeforeAll
     static void setUpAll() {
         SelenideLogger.addListener("allure", new AllureSelenide());
-        Configuration.timeout = 10000;
     }
 
     @BeforeEach
@@ -39,167 +37,175 @@ public class PaymentTest {
         paymentForm = dashboardPage.openPaymentForm();
     }
 
-    @Test
-    @DisplayName("1. Payment approved (Happy path)")
-    void shouldApprovePaymentWithValidData() {
-        long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
-        long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
+    @Nested
+    class IncreasedTimeout{
+        @BeforeEach
+        void setTimeout() {
+            Configuration.timeout = 10000;
+        }
 
-        paymentForm.fillTheForm(DataHelper.generateValidCardData(expiryYears));
-        paymentForm.getContinueButton().click();
+        @Test
+        @DisplayName("1. Payment approved (Happy path)")
+        void shouldApprovePaymentWithValidData() {
+            long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
+            long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
 
-        paymentForm.checkSuccessNotification();
-        assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
-        assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
-        assertEquals(approved, SQLHelper.getLastStatusFromPaymentsTable());
-    }
+            paymentForm.fillTheForm(DataHelper.generateValidCardData(expiryYears));
+            paymentForm.getContinueButton().click();
 
-    @Test
-    @DisplayName("2. Send form with max expiry year")
-    void shouldSendFormWithMaxExpiryYear() {
-        long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
-        long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
+            paymentForm.checkSuccessNotification();
+            assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
+            assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
+            assertEquals(approved, SQLHelper.getLastStatusFromPaymentsTable());
+        }
 
-        paymentForm.fillTheForm(DataHelper.generateCardDataWithShiftedYearFromCurrent(expiryYears));
-        paymentForm.getContinueButton().click();
+        @Test
+        @DisplayName("2. Send form with max expiry year")
+        void shouldSendFormWithMaxExpiryYear() {
+            long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
+            long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
 
-        paymentForm.checkSuccessNotification();
-        assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
-        assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
-        assertEquals(approved, SQLHelper.getLastStatusFromPaymentsTable());
-    }
+            paymentForm.fillTheForm(DataHelper.generateCardDataWithShiftedYearFromCurrent(expiryYears));
+            paymentForm.getContinueButton().click();
 
-    @Test
-    @DisplayName("3. Send form with max-1 expiry year")
-    void shouldSendFormWithExpiryYearBelowMax() {
-        long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
-        long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
+            paymentForm.checkSuccessNotification();
+            assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
+            assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
+            assertEquals(approved, SQLHelper.getLastStatusFromPaymentsTable());
+        }
 
-        paymentForm.fillTheForm(DataHelper.generateCardDataWithShiftedYearFromCurrent(expiryYears - 1));
-        paymentForm.getContinueButton().click();
+        @Test
+        @DisplayName("3. Send form with max-1 expiry year")
+        void shouldSendFormWithExpiryYearBelowMax() {
+            long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
+            long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
 
-        paymentForm.checkSuccessNotification();
-        assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
-        assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
-        assertEquals(approved, SQLHelper.getLastStatusFromPaymentsTable());
-    }
+            paymentForm.fillTheForm(DataHelper.generateCardDataWithShiftedYearFromCurrent(expiryYears - 1));
+            paymentForm.getContinueButton().click();
+
+            paymentForm.checkSuccessNotification();
+            assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
+            assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
+            assertEquals(approved, SQLHelper.getLastStatusFromPaymentsTable());
+        }
 
 
-    @Test
-    @DisplayName("4. Send form with expiry date in current month")
-    void shouldSendFormWithExpiryDateInCurrentMonth() {
-        long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
-        long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
+        @Test
+        @DisplayName("4. Send form with expiry date in current month")
+        void shouldSendFormWithExpiryDateInCurrentMonth() {
+            long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
+            long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
 
-        paymentForm.fillTheForm(DataHelper.generateCardDataExpireInShiftedMonthFromCurrent(0));
-        paymentForm.getContinueButton().click();
+            paymentForm.fillTheForm(DataHelper.generateCardDataExpireInShiftedMonthFromCurrent(0));
+            paymentForm.getContinueButton().click();
 
-        paymentForm.checkSuccessNotification();
-        assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
-        assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
-        assertEquals(approved, SQLHelper.getLastStatusFromPaymentsTable());
-    }
+            paymentForm.checkSuccessNotification();
+            assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
+            assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
+            assertEquals(approved, SQLHelper.getLastStatusFromPaymentsTable());
+        }
 
-    @Test
-    @DisplayName("5. Send form with expiry date in next month")
-    void shouldSendFormWithExpiryDateInNextMonth() {
-        long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
-        long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
+        @Test
+        @DisplayName("5. Send form with expiry date in next month")
+        void shouldSendFormWithExpiryDateInNextMonth() {
+            long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
+            long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
 
-        paymentForm.fillTheForm(DataHelper.generateCardDataExpireInShiftedMonthFromCurrent(1));
-        paymentForm.getContinueButton().click();
+            paymentForm.fillTheForm(DataHelper.generateCardDataExpireInShiftedMonthFromCurrent(1));
+            paymentForm.getContinueButton().click();
 
-        paymentForm.checkSuccessNotification();
-        assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
-        assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
-        assertEquals(approved, SQLHelper.getLastStatusFromPaymentsTable());
-    }
+            paymentForm.checkSuccessNotification();
+            assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
+            assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
+            assertEquals(approved, SQLHelper.getLastStatusFromPaymentsTable());
+        }
 
-    @Test
-    @DisplayName("6. Send form with card owner length in 26 symbols")
-    void shouldSendFormWithCardOwnerInLessThanMaxSymbols() {
-        long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
-        long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
+        @Test
+        @DisplayName("6. Send form with card owner length in 26 symbols")
+        void shouldSendFormWithCardOwnerInLessThanMaxSymbols() {
+            long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
+            long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
 
-        paymentForm.fillTheForm(new DataHelper.CardData(DataHelper.getApprovedCardNumber(),
-                DataHelper.generateMonth(),
-                DataHelper.generateShiftedYearFromCurrent(expiryYears),
-                DataHelper.generateCardOwnerWithFixedLength("en",cardOwnerMaxLength - 1),
-                DataHelper.generateNumericCode(3)));
-        paymentForm.getContinueButton().click();
+            paymentForm.fillTheForm(new DataHelper.CardData(DataHelper.getApprovedCardNumber(),
+                    DataHelper.generateMonth(),
+                    DataHelper.generateShiftedYearFromCurrent(expiryYears),
+                    DataHelper.generateCardOwnerWithFixedLength("en",cardOwnerMaxLength - 1),
+                    DataHelper.generateNumericCode(3)));
+            paymentForm.getContinueButton().click();
 
-        paymentForm.checkSuccessNotification();
-        assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
-        assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
-        assertEquals(approved, SQLHelper.getLastStatusFromPaymentsTable());
-    }
+            paymentForm.checkSuccessNotification();
+            assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
+            assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
+            assertEquals(approved, SQLHelper.getLastStatusFromPaymentsTable());
+        }
 
-    @Test
-    @DisplayName("7. Send form with card owner max length")
-    void shouldSendFormWithCardOwnerMaxLength() {
-        long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
-        long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
+        @Test
+        @DisplayName("7. Send form with card owner max length")
+        void shouldSendFormWithCardOwnerMaxLength() {
+            long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
+            long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
 
-        paymentForm.fillTheForm(new DataHelper.CardData(DataHelper.getApprovedCardNumber(),
-                DataHelper.generateMonth(),
-                DataHelper.generateShiftedYearFromCurrent(expiryYears),
-                DataHelper.generateCardOwnerWithFixedLength("en",cardOwnerMaxLength),
-                DataHelper.generateNumericCode(3)));
-        paymentForm.getContinueButton().click();
+            paymentForm.fillTheForm(new DataHelper.CardData(DataHelper.getApprovedCardNumber(),
+                    DataHelper.generateMonth(),
+                    DataHelper.generateShiftedYearFromCurrent(expiryYears),
+                    DataHelper.generateCardOwnerWithFixedLength("en",cardOwnerMaxLength),
+                    DataHelper.generateNumericCode(3)));
+            paymentForm.getContinueButton().click();
 
-        paymentForm.checkSuccessNotification();
-        assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
-        assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
-        assertEquals(approved, SQLHelper.getLastStatusFromPaymentsTable());
-    }
+            paymentForm.checkSuccessNotification();
+            assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
+            assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
+            assertEquals(approved, SQLHelper.getLastStatusFromPaymentsTable());
+        }
 
-    @Test
-    @DisplayName("8. Send form with card owner with hyphen")
-    void shouldSendFormWithCardOwnerWithHyphen() {
-        long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
-        long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
+        @Test
+        @DisplayName("8. Send form with card owner with hyphen")
+        void shouldSendFormWithCardOwnerWithHyphen() {
+            long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
+            long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
 
-        paymentForm.fillTheForm(new DataHelper.CardData(DataHelper.getApprovedCardNumber(),
-                DataHelper.generateMonth(),
-                DataHelper.generateShiftedYearFromCurrent(expiryYears),
-                DataHelper.getCardOwnerWithHyphen(),
-                DataHelper.generateNumericCode(3)));
-        paymentForm.getContinueButton().click();
+            paymentForm.fillTheForm(new DataHelper.CardData(DataHelper.getApprovedCardNumber(),
+                    DataHelper.generateMonth(),
+                    DataHelper.generateShiftedYearFromCurrent(expiryYears),
+                    DataHelper.getCardOwnerWithHyphen(),
+                    DataHelper.generateNumericCode(3)));
+            paymentForm.getContinueButton().click();
 
-        paymentForm.checkSuccessNotification();
-        assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
-        assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
-        assertEquals(approved, SQLHelper.getLastStatusFromPaymentsTable());
-    }
+            paymentForm.checkSuccessNotification();
+            assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
+            assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
+            assertEquals(approved, SQLHelper.getLastStatusFromPaymentsTable());
+        }
 
-    @Test
-    @DisplayName("9. Send form with zero CVC")
-    void shouldSendFormWithZeroCVC() {
-        long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
-        long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
+        @Test
+        @DisplayName("9. Send form with zero CVC")
+        void shouldSendFormWithZeroCVC() {
+            long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
+            long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
 
-        paymentForm.fillTheForm(DataHelper.generateCardDataWithZeroCVC(expiryYears));
-        paymentForm.getContinueButton().click();
+            paymentForm.fillTheForm(DataHelper.generateCardDataWithZeroCVC(expiryYears));
+            paymentForm.getContinueButton().click();
 
-        paymentForm.checkSuccessNotification();
-        assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
-        assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
-        assertEquals(approved, SQLHelper.getLastStatusFromPaymentsTable());
-    }
+            paymentForm.checkSuccessNotification();
+            assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
+            assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
+            assertEquals(approved, SQLHelper.getLastStatusFromPaymentsTable());
+        }
 
-    @Test
-    @DisplayName("10. Send form with declined card")
-    void shouldSendFormWithDeclinedCard() {
-        long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
-        long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
+        @Test
+        @DisplayName("10. Send form with declined card")
+        void shouldSendFormWithDeclinedCard() {
+            long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
+            long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
 
-        paymentForm.fillTheForm(DataHelper.generateCardDataWithDeclinedCard(expiryYears));
-        paymentForm.getContinueButton().click();
+            paymentForm.fillTheForm(DataHelper.generateCardDataWithDeclinedCard(expiryYears));
+            paymentForm.getContinueButton().click();
 
-        paymentForm.checkErrorNotification();
-        assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
-        assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
-        assertEquals(declined, SQLHelper.getLastStatusFromPaymentsTable());
+            paymentForm.checkErrorNotification();
+            assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
+            assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
+            assertEquals(declined, SQLHelper.getLastStatusFromPaymentsTable());
+        }
     }
 
     @Test
