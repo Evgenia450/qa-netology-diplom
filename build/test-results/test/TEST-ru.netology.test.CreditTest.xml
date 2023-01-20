@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ru.netology.test.CreditTest" tests="30" skipped="0" failures="7" errors="0" timestamp="2023-01-20T15:03:24" hostname="Lenovo" time="52.31">
+<testsuite name="ru.netology.test.CreditTest" tests="30" skipped="0" failures="7" errors="0" timestamp="2023-01-20T19:52:59" hostname="Lenovo" time="38.552">
   <properties/>
-  <testcase name="57. Incomplete card number" classname="ru.netology.test.CreditTest" time="2.762"/>
-  <testcase name="52. Empty month" classname="ru.netology.test.CreditTest" time="0.994"/>
-  <testcase name="64. Enter more symbols, than month length" classname="ru.netology.test.CreditTest" time="0.364"/>
-  <testcase name="62. Non-existent month" classname="ru.netology.test.CreditTest" time="0.821"/>
-  <testcase name="63. Incomplete month (only 1 digit)" classname="ru.netology.test.CreditTest" time="1.044"/>
-  <testcase name="60. Card number consists of zeroes" classname="ru.netology.test.CreditTest" time="5.123">
-    <failure message="Element not found {by text: Номер карты/By.xpath: ../.input__sub}&#10;Expected: exist&#10;Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227015142.0.png&#10;Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227015142.0.html&#10;Timeout: 4 s.&#10;Caused by: NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.input__sub&quot;}" type="com.codeborne.selenide.ex.ElementNotFound">Element not found {by text: Номер карты/By.xpath: ../.input__sub}
-Expected: exist
-Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227015142.0.png
-Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227015142.0.html
-Timeout: 4 s.
+  <testcase name="57. Отправка формы с номером карты длиной 15 цифр" classname="ru.netology.test.CreditTest" time="2.991"/>
+  <testcase name="52. Отправка формы без указания месяца" classname="ru.netology.test.CreditTest" time="0.919"/>
+  <testcase name="64. Ввод месяца неверного формата: более 2 цифр (без отправки формы)" classname="ru.netology.test.CreditTest" time="0.432"/>
+  <testcase name="62. Отправка формы с несуществующим месяцем" classname="ru.netology.test.CreditTest" time="1.002"/>
+  <testcase name="63. Отправка формы с месяцем неверного формата: менее 2 цифр" classname="ru.netology.test.CreditTest" time="0.88"/>
+  <testcase name="60. Отправка формы с номером карты, состоящим из нулей" classname="ru.netology.test.CreditTest" time="3.211">
+    <failure message="Element not found {by text: Номер карты/By.xpath: ../.input__sub}&#10;Expected: exact text 'Неверный формат'&#10;Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244388377.0.png&#10;Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244388377.0.html&#10;Timeout: 2 s.&#10;Caused by: NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.input__sub&quot;}" type="com.codeborne.selenide.ex.ElementNotFound">Element not found {by text: Номер карты/By.xpath: ../.input__sub}
+Expected: exact text 'Неверный формат'
+Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244388377.0.png
+Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244388377.0.html
+Timeout: 2 s.
 Caused by: NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.input__sub&quot;}
 	at com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:83)
 	at com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:136)
@@ -21,9 +21,9 @@ Caused by: NoSuchElementException: no such element: Unable to locate element: {&
 	at com.codeborne.selenide.commands.Commands.execute(Commands.java:155)
 	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:128)
 	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:80)
-	at com.sun.proxy.$Proxy16.should(Unknown Source)
-	at ru.netology.pages.FormPage.checkCardErrorIndication(FormPage.java:60)
-	at ru.netology.test.CreditTest.shouldNotSendFormWithZeroCard(CreditTest.java:288)
+	at com.sun.proxy.$Proxy16.shouldHave(Unknown Source)
+	at ru.netology.pages.FormPage.checkCardNumberError(FormPage.java:93)
+	at ru.netology.test.CreditTest.shouldNotSendFormWithZeroCard(CreditTest.java:277)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -126,8 +126,8 @@ For documentation on this error, please visit: https://www.seleniumhq.org/except
 Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
 System info: host: 'Lenovo', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '5.19.0-29-generic', java.version: '11.0.17'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 108.0.5359.124, chrome: {chromedriverVersion: 108.0.5359.71 (1e0e3868ee06..., userDataDir: /tmp/.com.google.Chrome.ohlce1}, goog:chromeOptions: {debuggerAddress: localhost:33673}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: LINUX, platformName: LINUX, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
-Session ID: 24ca4e14789afc84e124daa987c2f287
+Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 108.0.5359.124, chrome: {chromedriverVersion: 108.0.5359.71 (1e0e3868ee06..., userDataDir: /tmp/.com.google.Chrome.et6RjN}, goog:chromeOptions: {debuggerAddress: localhost:38297}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: LINUX, platformName: LINUX, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: 9f9e5d395e72f880030d505718a21a0d
 *** Element info: {Using=css selector, value=.input__sub}
 	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
 	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
@@ -151,15 +151,15 @@ Session ID: 24ca4e14789afc84e124daa987c2f287
 	... 104 more
 </failure>
   </testcase>
-  <testcase name="66. Zero year" classname="ru.netology.test.CreditTest" time="0.919"/>
-  <testcase name="65. Enter invalid symbols in month" classname="ru.netology.test.CreditTest" time="0.31"/>
-  <testcase name="79. Enter more symbols, than CVC length" classname="ru.netology.test.CreditTest" time="0.29"/>
-  <testcase name="73. Incomplete card owner (only one word)" classname="ru.netology.test.CreditTest" time="5.267">
-    <failure message="Element not found {by text: Владелец/By.xpath: ../.input__sub}&#10;Expected: exist&#10;Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227021782.1.png&#10;Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227021782.1.html&#10;Timeout: 4 s.&#10;Caused by: NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.input__sub&quot;}" type="com.codeborne.selenide.ex.ElementNotFound">Element not found {by text: Владелец/By.xpath: ../.input__sub}
-Expected: exist
-Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227021782.1.png
-Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227021782.1.html
-Timeout: 4 s.
+  <testcase name="66. Отправка формы с нулевым годом" classname="ru.netology.test.CreditTest" time="1.105"/>
+  <testcase name="65. Ввод в поле месяца невалидных символов (без отправки формы)" classname="ru.netology.test.CreditTest" time="0.381"/>
+  <testcase name="79. Ввод CVC/CVV неверного формата: более 3 цифр" classname="ru.netology.test.CreditTest" time="0.254"/>
+  <testcase name="73. Отправка формы с неполным именем (только одно слово в поле)" classname="ru.netology.test.CreditTest" time="3.13">
+    <failure message="Element not found {by text: Владелец/By.xpath: ../.input__sub}&#10;Expected: exact text 'Введите имя и фамилию, как указано на карте'&#10;Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244393253.1.png&#10;Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244393253.1.html&#10;Timeout: 2 s.&#10;Caused by: NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.input__sub&quot;}" type="com.codeborne.selenide.ex.ElementNotFound">Element not found {by text: Владелец/By.xpath: ../.input__sub}
+Expected: exact text 'Введите имя и фамилию, как указано на карте'
+Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244393253.1.png
+Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244393253.1.html
+Timeout: 2 s.
 Caused by: NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.input__sub&quot;}
 	at com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:83)
 	at com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:136)
@@ -169,9 +169,9 @@ Caused by: NoSuchElementException: no such element: Unable to locate element: {&
 	at com.codeborne.selenide.commands.Commands.execute(Commands.java:155)
 	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:128)
 	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:80)
-	at com.sun.proxy.$Proxy16.should(Unknown Source)
-	at ru.netology.pages.FormPage.checkCardOwnerAsWrittenOnCard(FormPage.java:88)
-	at ru.netology.test.CreditTest.shouldNotSendFormWithIncompleteCardOwner(CreditTest.java:411)
+	at com.sun.proxy.$Proxy16.shouldHave(Unknown Source)
+	at ru.netology.pages.FormPage.checkCardOwnerError(FormPage.java:105)
+	at ru.netology.test.CreditTest.shouldNotSendFormWithIncompleteCardOwner(CreditTest.java:400)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -274,10 +274,11 @@ For documentation on this error, please visit: https://www.seleniumhq.org/except
 Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
 System info: host: 'Lenovo', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '5.19.0-29-generic', java.version: '11.0.17'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 108.0.5359.124, chrome: {chromedriverVersion: 108.0.5359.71 (1e0e3868ee06..., userDataDir: /tmp/.com.google.Chrome.ohlce1}, goog:chromeOptions: {debuggerAddress: localhost:33673}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: LINUX, platformName: LINUX, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
-Session ID: 24ca4e14789afc84e124daa987c2f287
+Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 108.0.5359.124, chrome: {chromedriverVersion: 108.0.5359.71 (1e0e3868ee06..., userDataDir: /tmp/.com.google.Chrome.et6RjN}, goog:chromeOptions: {debuggerAddress: localhost:38297}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: LINUX, platformName: LINUX, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: 9f9e5d395e72f880030d505718a21a0d
 *** Element info: {Using=css selector, value=.input__sub}
-	at jdk.internal.reflect.GeneratedConstructorAccessor14.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
 	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
 	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
@@ -298,13 +299,13 @@ Session ID: 24ca4e14789afc84e124daa987c2f287
 	... 104 more
 </failure>
   </testcase>
-  <testcase name="51. Empty card number" classname="ru.netology.test.CreditTest" time="0.791"/>
-  <testcase name="74. Cyrillic symbols in card owner" classname="ru.netology.test.CreditTest" time="5.038">
-    <failure message="Element not found {by text: Владелец/By.xpath: ../.input__sub}&#10;Expected: exist&#10;Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227027653.2.png&#10;Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227027653.2.html&#10;Timeout: 4 s.&#10;Caused by: NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.input__sub&quot;}" type="com.codeborne.selenide.ex.ElementNotFound">Element not found {by text: Владелец/By.xpath: ../.input__sub}
-Expected: exist
-Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227027653.2.png
-Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227027653.2.html
-Timeout: 4 s.
+  <testcase name="51. Отправка формы без номера карты" classname="ru.netology.test.CreditTest" time="0.788"/>
+  <testcase name="74. Отправка формы с кирилическими символами  имени владельца" classname="ru.netology.test.CreditTest" time="3.113">
+    <failure message="Element not found {by text: Владелец/By.xpath: ../.input__sub}&#10;Expected: exact text 'Только латинские символы (A-Z), пробел и дефис'&#10;Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244397175.2.png&#10;Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244397175.2.html&#10;Timeout: 2 s.&#10;Caused by: NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.input__sub&quot;}" type="com.codeborne.selenide.ex.ElementNotFound">Element not found {by text: Владелец/By.xpath: ../.input__sub}
+Expected: exact text 'Только латинские символы (A-Z), пробел и дефис'
+Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244397175.2.png
+Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244397175.2.html
+Timeout: 2 s.
 Caused by: NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.input__sub&quot;}
 	at com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:83)
 	at com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:136)
@@ -314,9 +315,9 @@ Caused by: NoSuchElementException: no such element: Unable to locate element: {&
 	at com.codeborne.selenide.commands.Commands.execute(Commands.java:155)
 	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:128)
 	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:80)
-	at com.sun.proxy.$Proxy16.should(Unknown Source)
-	at ru.netology.pages.FormPage.checkCardOwnerWrongFormat(FormPage.java:92)
-	at ru.netology.test.CreditTest.shouldNotSendFormWithCyrillicCardOwner(CreditTest.java:420)
+	at com.sun.proxy.$Proxy16.shouldHave(Unknown Source)
+	at ru.netology.pages.FormPage.checkCardOwnerError(FormPage.java:105)
+	at ru.netology.test.CreditTest.shouldNotSendFormWithCyrillicCardOwner(CreditTest.java:409)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -419,8 +420,8 @@ For documentation on this error, please visit: https://www.seleniumhq.org/except
 Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
 System info: host: 'Lenovo', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '5.19.0-29-generic', java.version: '11.0.17'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 108.0.5359.124, chrome: {chromedriverVersion: 108.0.5359.71 (1e0e3868ee06..., userDataDir: /tmp/.com.google.Chrome.ohlce1}, goog:chromeOptions: {debuggerAddress: localhost:33673}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: LINUX, platformName: LINUX, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
-Session ID: 24ca4e14789afc84e124daa987c2f287
+Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 108.0.5359.124, chrome: {chromedriverVersion: 108.0.5359.71 (1e0e3868ee06..., userDataDir: /tmp/.com.google.Chrome.et6RjN}, goog:chromeOptions: {debuggerAddress: localhost:38297}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: LINUX, platformName: LINUX, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: 9f9e5d395e72f880030d505718a21a0d
 *** Element info: {Using=css selector, value=.input__sub}
 	at jdk.internal.reflect.GeneratedConstructorAccessor14.newInstance(Unknown Source)
 	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
@@ -443,14 +444,14 @@ Session ID: 24ca4e14789afc84e124daa987c2f287
 	... 104 more
 </failure>
   </testcase>
-  <testcase name="69. Enter invalid symbols in year" classname="ru.netology.test.CreditTest" time="0.3"/>
-  <testcase name="80. Enter invalid symbols in CVC" classname="ru.netology.test.CreditTest" time="0.407"/>
-  <testcase name="61. Zero month" classname="ru.netology.test.CreditTest" time="5.18">
-    <failure message="Element not found {by text: Месяц/By.xpath: ../.input__sub}&#10;Expected: exist&#10;Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227033537.3.png&#10;Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227033537.3.html&#10;Timeout: 4 s.&#10;Caused by: NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.input__sub&quot;}" type="com.codeborne.selenide.ex.ElementNotFound">Element not found {by text: Месяц/By.xpath: ../.input__sub}
-Expected: exist
-Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227033537.3.png
-Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227033537.3.html
-Timeout: 4 s.
+  <testcase name="69. Ввод в поле года невалидных символов (без отправки формы)" classname="ru.netology.test.CreditTest" time="0.421"/>
+  <testcase name="80. Ввод в поле CVC/CVV невалидных символов (без отправки формы)" classname="ru.netology.test.CreditTest" time="0.292"/>
+  <testcase name="61. Отправка формы с нулевым месяцем" classname="ru.netology.test.CreditTest" time="3.29">
+    <failure message="Element not found {by text: Месяц/By.xpath: ../.input__sub}&#10;Expected: exact text 'Неверный формат'&#10;Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244401158.3.png&#10;Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244401158.3.html&#10;Timeout: 2 s.&#10;Caused by: NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.input__sub&quot;}" type="com.codeborne.selenide.ex.ElementNotFound">Element not found {by text: Месяц/By.xpath: ../.input__sub}
+Expected: exact text 'Неверный формат'
+Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244401158.3.png
+Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244401158.3.html
+Timeout: 2 s.
 Caused by: NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.input__sub&quot;}
 	at com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:83)
 	at com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:136)
@@ -460,9 +461,9 @@ Caused by: NoSuchElementException: no such element: Unable to locate element: {&
 	at com.codeborne.selenide.commands.Commands.execute(Commands.java:155)
 	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:128)
 	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:80)
-	at com.sun.proxy.$Proxy16.should(Unknown Source)
-	at ru.netology.pages.FormPage.checkMonthWrongFormatOrEmpty(FormPage.java:64)
-	at ru.netology.test.CreditTest.shouldNotSendFormWithZeroMonth(CreditTest.java:297)
+	at com.sun.proxy.$Proxy16.shouldHave(Unknown Source)
+	at ru.netology.pages.FormPage.checkMonthError(FormPage.java:97)
+	at ru.netology.test.CreditTest.shouldNotSendFormWithZeroMonth(CreditTest.java:286)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -565,8 +566,8 @@ For documentation on this error, please visit: https://www.seleniumhq.org/except
 Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
 System info: host: 'Lenovo', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '5.19.0-29-generic', java.version: '11.0.17'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 108.0.5359.124, chrome: {chromedriverVersion: 108.0.5359.71 (1e0e3868ee06..., userDataDir: /tmp/.com.google.Chrome.ohlce1}, goog:chromeOptions: {debuggerAddress: localhost:33673}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: LINUX, platformName: LINUX, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
-Session ID: 24ca4e14789afc84e124daa987c2f287
+Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 108.0.5359.124, chrome: {chromedriverVersion: 108.0.5359.71 (1e0e3868ee06..., userDataDir: /tmp/.com.google.Chrome.et6RjN}, goog:chromeOptions: {debuggerAddress: localhost:38297}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: LINUX, platformName: LINUX, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: 9f9e5d395e72f880030d505718a21a0d
 *** Element info: {Using=css selector, value=.input__sub}
 	at jdk.internal.reflect.GeneratedConstructorAccessor14.newInstance(Unknown Source)
 	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
@@ -589,14 +590,14 @@ Session ID: 24ca4e14789afc84e124daa987c2f287
 	... 104 more
 </failure>
   </testcase>
-  <testcase name="55. Empty CVC/CVV" classname="ru.netology.test.CreditTest" time="0.852"/>
-  <testcase name="58. Enter more symbols, than card number length" classname="ru.netology.test.CreditTest" time="0.258"/>
-  <testcase name="75. Invalid symbols in card owner" classname="ru.netology.test.CreditTest" time="5.171">
-    <failure message="Element not found {by text: Владелец/By.xpath: ../.input__sub}&#10;Expected: exist&#10;Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227039765.4.png&#10;Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227039765.4.html&#10;Timeout: 4 s.&#10;Caused by: NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.input__sub&quot;}" type="com.codeborne.selenide.ex.ElementNotFound">Element not found {by text: Владелец/By.xpath: ../.input__sub}
-Expected: exist
-Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227039765.4.png
-Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227039765.4.html
-Timeout: 4 s.
+  <testcase name="55. Отправка формы без указания CVC/CVV кода" classname="ru.netology.test.CreditTest" time="0.829"/>
+  <testcase name="58. Ввод номера карты длиной 17 цифр (без отправки формы)" classname="ru.netology.test.CreditTest" time="0.259"/>
+  <testcase name="75. Отправка формы с невалидными символами в имени владельца" classname="ru.netology.test.CreditTest" time="3.124">
+    <failure message="Element not found {by text: Владелец/By.xpath: ../.input__sub}&#10;Expected: exact text 'Только латинские символы (A-Z), пробел и дефис'&#10;Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244405402.4.png&#10;Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244405402.4.html&#10;Timeout: 2 s.&#10;Caused by: NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.input__sub&quot;}" type="com.codeborne.selenide.ex.ElementNotFound">Element not found {by text: Владелец/By.xpath: ../.input__sub}
+Expected: exact text 'Только латинские символы (A-Z), пробел и дефис'
+Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244405402.4.png
+Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244405402.4.html
+Timeout: 2 s.
 Caused by: NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.input__sub&quot;}
 	at com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:83)
 	at com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:136)
@@ -606,9 +607,9 @@ Caused by: NoSuchElementException: no such element: Unable to locate element: {&
 	at com.codeborne.selenide.commands.Commands.execute(Commands.java:155)
 	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:128)
 	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:80)
-	at com.sun.proxy.$Proxy16.should(Unknown Source)
-	at ru.netology.pages.FormPage.checkCardOwnerWrongFormat(FormPage.java:92)
-	at ru.netology.test.CreditTest.shouldNotSendFormWithInvalidCardOwner(CreditTest.java:429)
+	at com.sun.proxy.$Proxy16.shouldHave(Unknown Source)
+	at ru.netology.pages.FormPage.checkCardOwnerError(FormPage.java:105)
+	at ru.netology.test.CreditTest.shouldNotSendFormWithInvalidCardOwner(CreditTest.java:418)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -711,8 +712,8 @@ For documentation on this error, please visit: https://www.seleniumhq.org/except
 Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
 System info: host: 'Lenovo', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '5.19.0-29-generic', java.version: '11.0.17'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 108.0.5359.124, chrome: {chromedriverVersion: 108.0.5359.71 (1e0e3868ee06..., userDataDir: /tmp/.com.google.Chrome.ohlce1}, goog:chromeOptions: {debuggerAddress: localhost:33673}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: LINUX, platformName: LINUX, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
-Session ID: 24ca4e14789afc84e124daa987c2f287
+Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 108.0.5359.124, chrome: {chromedriverVersion: 108.0.5359.71 (1e0e3868ee06..., userDataDir: /tmp/.com.google.Chrome.et6RjN}, goog:chromeOptions: {debuggerAddress: localhost:38297}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: LINUX, platformName: LINUX, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: 9f9e5d395e72f880030d505718a21a0d
 *** Element info: {Using=css selector, value=.input__sub}
 	at jdk.internal.reflect.GeneratedConstructorAccessor14.newInstance(Unknown Source)
 	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
@@ -735,15 +736,15 @@ Session ID: 24ca4e14789afc84e124daa987c2f287
 	... 104 more
 </failure>
   </testcase>
-  <testcase name="71. More than expiry years" classname="ru.netology.test.CreditTest" time="0.796"/>
-  <testcase name="54. Empty card owner" classname="ru.netology.test.CreditTest" time="0.846"/>
-  <testcase name="70. Previous year (card expired)" classname="ru.netology.test.CreditTest" time="0.706"/>
-  <testcase name="72. Card expired in previous month" classname="ru.netology.test.CreditTest" time="4.879">
-    <failure message="Element not found {by text: Месяц/By.xpath: ../.input__sub}&#10;Expected: exist&#10;Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227047115.5.png&#10;Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227047115.5.html&#10;Timeout: 4 s.&#10;Caused by: NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.input__sub&quot;}" type="com.codeborne.selenide.ex.ElementNotFound">Element not found {by text: Месяц/By.xpath: ../.input__sub}
-Expected: exist
-Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227047115.5.png
-Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227047115.5.html
-Timeout: 4 s.
+  <testcase name="71. Отправка формы с годом на 6 лет больше текущего" classname="ru.netology.test.CreditTest" time="0.678"/>
+  <testcase name="54. Отправка формы без указания владельца карты" classname="ru.netology.test.CreditTest" time="0.63"/>
+  <testcase name="70. Отправка формы с предыдущим годом" classname="ru.netology.test.CreditTest" time="0.663"/>
+  <testcase name="72. Отправка формы с истекшим сроком" classname="ru.netology.test.CreditTest" time="3.181">
+    <failure message="Element not found {by text: Месяц/By.xpath: ../.input__sub}&#10;Expected: exact text 'Неверно указан срок действия карты'&#10;Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244410674.5.png&#10;Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244410674.5.html&#10;Timeout: 2 s.&#10;Caused by: NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.input__sub&quot;}" type="com.codeborne.selenide.ex.ElementNotFound">Element not found {by text: Месяц/By.xpath: ../.input__sub}
+Expected: exact text 'Неверно указан срок действия карты'
+Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244410674.5.png
+Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244410674.5.html
+Timeout: 2 s.
 Caused by: NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.input__sub&quot;}
 	at com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:83)
 	at com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:136)
@@ -753,9 +754,9 @@ Caused by: NoSuchElementException: no such element: Unable to locate element: {&
 	at com.codeborne.selenide.commands.Commands.execute(Commands.java:155)
 	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:128)
 	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:80)
-	at com.sun.proxy.$Proxy16.should(Unknown Source)
-	at ru.netology.pages.FormPage.checkMonthWrongExpiryDate(FormPage.java:68)
-	at ru.netology.test.CreditTest.shouldNotSendFormWithExpiryDateInPrevMonth(CreditTest.java:402)
+	at com.sun.proxy.$Proxy16.shouldHave(Unknown Source)
+	at ru.netology.pages.FormPage.checkMonthError(FormPage.java:97)
+	at ru.netology.test.CreditTest.shouldNotSendFormWithExpiryDateInPrevMonth(CreditTest.java:391)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -858,8 +859,8 @@ For documentation on this error, please visit: https://www.seleniumhq.org/except
 Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
 System info: host: 'Lenovo', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '5.19.0-29-generic', java.version: '11.0.17'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 108.0.5359.124, chrome: {chromedriverVersion: 108.0.5359.71 (1e0e3868ee06..., userDataDir: /tmp/.com.google.Chrome.ohlce1}, goog:chromeOptions: {debuggerAddress: localhost:33673}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: LINUX, platformName: LINUX, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
-Session ID: 24ca4e14789afc84e124daa987c2f287
+Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 108.0.5359.124, chrome: {chromedriverVersion: 108.0.5359.71 (1e0e3868ee06..., userDataDir: /tmp/.com.google.Chrome.et6RjN}, goog:chromeOptions: {debuggerAddress: localhost:38297}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: LINUX, platformName: LINUX, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: 9f9e5d395e72f880030d505718a21a0d
 *** Element info: {Using=css selector, value=.input__sub}
 	at jdk.internal.reflect.GeneratedConstructorAccessor14.newInstance(Unknown Source)
 	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
@@ -882,12 +883,12 @@ Session ID: 24ca4e14789afc84e124daa987c2f287
 	... 104 more
 </failure>
   </testcase>
-  <testcase name="77. Card owner length more than 27 symbols" classname="ru.netology.test.CreditTest" time="5.094">
-    <failure message="Element not found {by text: Владелец/By.xpath: ../.input__sub}&#10;Expected: exist&#10;Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227052089.6.png&#10;Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227052089.6.html&#10;Timeout: 4 s.&#10;Caused by: NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.input__sub&quot;}" type="com.codeborne.selenide.ex.ElementNotFound">Element not found {by text: Владелец/By.xpath: ../.input__sub}
-Expected: exist
-Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227052089.6.png
-Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227052089.6.html
-Timeout: 4 s.
+  <testcase name="77. Отправка формы с именем владельца 28 символов (включая пробел)" classname="ru.netology.test.CreditTest" time="3.094">
+    <failure message="Element not found {by text: Владелец/By.xpath: ../.input__sub}&#10;Expected: exact text 'Введите имя и фамилию, как указано на карте'&#10;Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244413623.6.png&#10;Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244413623.6.html&#10;Timeout: 2 s.&#10;Caused by: NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.input__sub&quot;}" type="com.codeborne.selenide.ex.ElementNotFound">Element not found {by text: Владелец/By.xpath: ../.input__sub}
+Expected: exact text 'Введите имя и фамилию, как указано на карте'
+Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244413623.6.png
+Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244413623.6.html
+Timeout: 2 s.
 Caused by: NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.input__sub&quot;}
 	at com.codeborne.selenide.impl.WebElementSource.createElementNotFoundError(WebElementSource.java:83)
 	at com.codeborne.selenide.impl.ElementFinder.createElementNotFoundError(ElementFinder.java:136)
@@ -897,9 +898,9 @@ Caused by: NoSuchElementException: no such element: Unable to locate element: {&
 	at com.codeborne.selenide.commands.Commands.execute(Commands.java:155)
 	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:128)
 	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:80)
-	at com.sun.proxy.$Proxy16.should(Unknown Source)
-	at ru.netology.pages.FormPage.checkCardOwnerAsWrittenOnCard(FormPage.java:88)
-	at ru.netology.test.CreditTest.shouldNotSendFormWithOverlongCardOwner(CreditTest.java:447)
+	at com.sun.proxy.$Proxy16.shouldHave(Unknown Source)
+	at ru.netology.pages.FormPage.checkCardOwnerError(FormPage.java:105)
+	at ru.netology.test.CreditTest.shouldNotSendFormWithOverlongCardOwner(CreditTest.java:436)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -1002,8 +1003,8 @@ For documentation on this error, please visit: https://www.seleniumhq.org/except
 Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
 System info: host: 'Lenovo', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '5.19.0-29-generic', java.version: '11.0.17'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 108.0.5359.124, chrome: {chromedriverVersion: 108.0.5359.71 (1e0e3868ee06..., userDataDir: /tmp/.com.google.Chrome.ohlce1}, goog:chromeOptions: {debuggerAddress: localhost:33673}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: LINUX, platformName: LINUX, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
-Session ID: 24ca4e14789afc84e124daa987c2f287
+Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 108.0.5359.124, chrome: {chromedriverVersion: 108.0.5359.71 (1e0e3868ee06..., userDataDir: /tmp/.com.google.Chrome.et6RjN}, goog:chromeOptions: {debuggerAddress: localhost:38297}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: LINUX, platformName: LINUX, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: 9f9e5d395e72f880030d505718a21a0d
 *** Element info: {Using=css selector, value=.input__sub}
 	at jdk.internal.reflect.GeneratedConstructorAccessor14.newInstance(Unknown Source)
 	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
@@ -1026,19 +1027,19 @@ Session ID: 24ca4e14789afc84e124daa987c2f287
 	... 104 more
 </failure>
   </testcase>
-  <testcase name="67. Incomplete year" classname="ru.netology.test.CreditTest" time="0.797"/>
-  <testcase name="53. Empty year" classname="ru.netology.test.CreditTest" time="0.763"/>
-  <testcase name="56. Empty form" classname="ru.netology.test.CreditTest" time="0.453"/>
-  <testcase name="78. Incomplete CVC" classname="ru.netology.test.CreditTest" time="0.793"/>
-  <testcase name="76. Spaces instead of card owner" classname="ru.netology.test.CreditTest" time="0.664"/>
-  <testcase name="59. Enter invalid symbols in card number" classname="ru.netology.test.CreditTest" time="0.325"/>
-  <testcase name="68. Enter more symbols, than year length" classname="ru.netology.test.CreditTest" time="0.259"/>
+  <testcase name="67. Отправка формы с годом неверного формата: менее 2 цифр" classname="ru.netology.test.CreditTest" time="0.791"/>
+  <testcase name="53. Отправка формы без указания года" classname="ru.netology.test.CreditTest" time="0.64"/>
+  <testcase name="56. Отправка пустой формы" classname="ru.netology.test.CreditTest" time="0.565"/>
+  <testcase name="78. Отправка формы с CVC/CVV неверного формата: менее 3 цифр" classname="ru.netology.test.CreditTest" time="0.674"/>
+  <testcase name="76. Отправка формы с пробелами в имени владельца" classname="ru.netology.test.CreditTest" time="0.651"/>
+  <testcase name="59. Ввод в поле для номера карты невалидных символов (без отправки формы)" classname="ru.netology.test.CreditTest" time="0.272"/>
+  <testcase name="68. Ввод года неверного формата: более 2 цифр (без отправки формы)" classname="ru.netology.test.CreditTest" time="0.244"/>
   <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[Starting ChromeDriver 108.0.5359.71 (1e0e3868ee06e91ad636a874420e3ca3ae3756ac-refs/branch-heads/5359@{#1016}) on port 24342
+  <system-err><![CDATA[Starting ChromeDriver 108.0.5359.71 (1e0e3868ee06e91ad636a874420e3ca3ae3756ac-refs/branch-heads/5359@{#1016}) on port 1652
 Only local connections are allowed.
 Please see https://chromedriver.chromium.org/security-considerations for suggestions on keeping ChromeDriver safe.
 ChromeDriver was started successfully.
-янв. 20, 2023 6:03:25 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+янв. 20, 2023 10:53:00 PM org.openqa.selenium.remote.ProtocolHandshake createSession
 INFO: Detected dialect: W3C
 ]]></system-err>
 </testsuite>

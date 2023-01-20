@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">1m26.50s</div>
+<div class="counter">1m4.20s</div>
 <p>duration</p>
 </div>
 </td>
@@ -71,7 +71,7 @@
 <h2>Failed tests</h2>
 <div class="test">
 <a name="shouldApprovePaymentWithValidData()"></a>
-<h3 class="failures">41. Credit approved (Happy path)</h3>
+<h3 class="failures">41. Кредит одобрен (Позитивный сценарий)</h3>
 <span class="code">
 <pre>org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
@@ -79,7 +79,7 @@
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
 	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
-	at ru.netology.test.CreditTest$IncreasedTimeout.shouldApprovePaymentWithValidData(CreditTest.java:49)
+	at ru.netology.test.CreditTest$IncreasedTimeout.shouldApprovePaymentWithValidData(CreditTest.java:43)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -191,7 +191,7 @@
 </div>
 <div class="test">
 <a name="shouldSendFormWithCardOwnerInLessThanMaxSymbols()"></a>
-<h3 class="failures">46. Card owner length = 26 symbols (max-1)</h3>
+<h3 class="failures">46. Отправка формы с именем владельца длиной 26 символов (включая пробел)</h3>
 <span class="code">
 <pre>org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
@@ -199,7 +199,7 @@
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
 	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
-	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithCardOwnerInLessThanMaxSymbols(CreditTest.java:125)
+	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithCardOwnerInLessThanMaxSymbols(CreditTest.java:119)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -311,15 +311,22 @@
 </div>
 <div class="test">
 <a name="shouldSendFormWithCardOwnerMaxLength()"></a>
-<h3 class="failures">47. Card owner max length</h3>
+<h3 class="failures">47. Отправка формы с именем владельца длиной 27 символов (включая пробел)</h3>
 <span class="code">
-<pre>org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;
-	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
-	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
-	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
-	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
-	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
-	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithCardOwnerMaxLength(CreditTest.java:140)
+<pre>Element should have exact text 'Операция одобрена Банком.' {.notification_status_ok/.notification__content}
+Element: '&lt;div class=&quot;notification__content&quot; displayed:false&gt;&lt;/div&gt;'
+Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244472938.8.png
+Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244472938.8.html
+Timeout: 10 s.
+	at com.codeborne.selenide.impl.WebElementSource.checkCondition(WebElementSource.java:121)
+	at com.codeborne.selenide.commands.Should.execute(Should.java:30)
+	at com.codeborne.selenide.commands.Should.execute(Should.java:14)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:155)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:128)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:80)
+	at com.sun.proxy.$Proxy16.shouldHave(Unknown Source)
+	at ru.netology.pages.FormPage.checkSuccessNotification(FormPage.java:83)
+	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithCardOwnerMaxLength(CreditTest.java:131)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -431,7 +438,7 @@
 </div>
 <div class="test">
 <a name="shouldSendFormWithCardOwnerWithHyphen()"></a>
-<h3 class="failures">48. Card owner with hyphen</h3>
+<h3 class="failures">48. Отправка формы с именем владельца, содержащим дефис</h3>
 <span class="code">
 <pre>org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
@@ -439,7 +446,7 @@
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
 	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
-	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithCardOwnerWithHyphen(CreditTest.java:155)
+	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithCardOwnerWithHyphen(CreditTest.java:149)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -551,13 +558,12 @@
 </div>
 <div class="test">
 <a name="shouldSendFormWithDeclinedCard()"></a>
-<h3 class="failures">50. Declined credit request</h3>
+<h3 class="failures">50. В кредите отказано (Негативный сценарий)</h3>
 <span class="code">
-<pre>Element should be visible {.notification_status_error}
-Element: '&lt;div class=&quot;notification notification_status_error notification_has-closer notification_stick-to_right notification_theme_alfa-on-white&quot; displayed:false&gt;&lt;/div&gt;'
-Actual value: visible:false
-Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227092648.7.png
-Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227092648.7.html
+<pre>Element should have exact text 'Ошибка! Банк отказал в проведении операции.' {.notification_status_error/.notification__content}
+Element: '&lt;div class=&quot;notification__content&quot; displayed:false&gt;&lt;/div&gt;'
+Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244442139.7.png
+Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244442139.7.html
 Timeout: 10 s.
 	at com.codeborne.selenide.impl.WebElementSource.checkCondition(WebElementSource.java:121)
 	at com.codeborne.selenide.commands.Should.execute(Should.java:30)
@@ -565,9 +571,9 @@ Timeout: 10 s.
 	at com.codeborne.selenide.commands.Commands.execute(Commands.java:155)
 	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:128)
 	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:80)
-	at com.sun.proxy.$Proxy16.shouldBe(Unknown Source)
-	at ru.netology.pages.FormPage.checkErrorNotification(FormPage.java:55)
-	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithDeclinedCard(CreditTest.java:182)
+	at com.sun.proxy.$Proxy16.shouldHave(Unknown Source)
+	at ru.netology.pages.FormPage.checkErrorNotification(FormPage.java:88)
+	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithDeclinedCard(CreditTest.java:176)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -679,7 +685,7 @@ Timeout: 10 s.
 </div>
 <div class="test">
 <a name="shouldSendFormWithExpiryDateInCurrentMonth()"></a>
-<h3 class="failures">44. Expiry date in current month</h3>
+<h3 class="failures">44. Отправка формы со сроком действия карты, истекающем в текущем месяце (граничное значение)</h3>
 <span class="code">
 <pre>org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
@@ -687,7 +693,7 @@ Timeout: 10 s.
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
 	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
-	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithExpiryDateInCurrentMonth(CreditTest.java:95)
+	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithExpiryDateInCurrentMonth(CreditTest.java:89)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -799,7 +805,7 @@ Timeout: 10 s.
 </div>
 <div class="test">
 <a name="shouldSendFormWithExpiryDateInNextMonth()"></a>
-<h3 class="failures">45. Expiry date in next month</h3>
+<h3 class="failures">45. Отправка формы со сроком действия карты, истекающем в следующем месяце (выше граничного значения)</h3>
 <span class="code">
 <pre>org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
@@ -807,7 +813,7 @@ Timeout: 10 s.
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
 	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
-	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithExpiryDateInNextMonth(CreditTest.java:110)
+	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithExpiryDateInNextMonth(CreditTest.java:104)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -919,7 +925,7 @@ Timeout: 10 s.
 </div>
 <div class="test">
 <a name="shouldSendFormWithExpiryYearBelowMax()"></a>
-<h3 class="failures">43. Max-1 expiry year</h3>
+<h3 class="failures">43. Отправка формы с годом на 4 года больше текущего (ниже граничного значения)</h3>
 <span class="code">
 <pre>org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
@@ -927,7 +933,7 @@ Timeout: 10 s.
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
 	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
-	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithExpiryYearBelowMax(CreditTest.java:79)
+	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithExpiryYearBelowMax(CreditTest.java:73)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -1039,7 +1045,7 @@ Timeout: 10 s.
 </div>
 <div class="test">
 <a name="shouldSendFormWithMaxExpiryYear()"></a>
-<h3 class="failures">42. Max expiry year</h3>
+<h3 class="failures">42. Отправка формы с годом на 5 лет больше текущего (граничное значение)</h3>
 <span class="code">
 <pre>org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
@@ -1047,7 +1053,7 @@ Timeout: 10 s.
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
 	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
-	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithMaxExpiryYear(CreditTest.java:64)
+	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithMaxExpiryYear(CreditTest.java:58)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -1159,7 +1165,7 @@ Timeout: 10 s.
 </div>
 <div class="test">
 <a name="shouldSendFormWithZeroCVC()"></a>
-<h3 class="failures">49. Valid data with zero CVC</h3>
+<h3 class="failures">49. Отправка формы с нулевым кодом CVC/CVV</h3>
 <span class="code">
 <pre>org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
@@ -1167,7 +1173,7 @@ Timeout: 10 s.
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
 	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
-	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithZeroCVC(CreditTest.java:170)
+	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithZeroCVC(CreditTest.java:164)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -1290,63 +1296,63 @@ Timeout: 10 s.
 </tr>
 </thead>
 <tr>
-<td class="failures">41. Credit approved (Happy path)</td>
+<td class="failures">41. Кредит одобрен (Позитивный сценарий)</td>
 <td class="failures">shouldApprovePaymentWithValidData()</td>
-<td class="failures">1.890s</td>
+<td class="failures">8.868s</td>
 <td class="failures">failed</td>
 </tr>
 <tr>
-<td class="failures">46. Card owner length = 26 symbols (max-1)</td>
+<td class="failures">46. Отправка формы с именем владельца длиной 26 символов (включая пробел)</td>
 <td class="failures">shouldSendFormWithCardOwnerInLessThanMaxSymbols()</td>
-<td class="failures">7.442s</td>
+<td class="failures">2.894s</td>
 <td class="failures">failed</td>
 </tr>
 <tr>
-<td class="failures">47. Card owner max length</td>
+<td class="failures">47. Отправка формы с именем владельца длиной 27 символов (включая пробел)</td>
 <td class="failures">shouldSendFormWithCardOwnerMaxLength()</td>
-<td class="failures">10.357s</td>
+<td class="failures">10.864s</td>
 <td class="failures">failed</td>
 </tr>
 <tr>
-<td class="failures">48. Card owner with hyphen</td>
+<td class="failures">48. Отправка формы с именем владельца, содержащим дефис</td>
 <td class="failures">shouldSendFormWithCardOwnerWithHyphen()</td>
-<td class="failures">8.691s</td>
+<td class="failures">6.889s</td>
 <td class="failures">failed</td>
 </tr>
 <tr>
-<td class="failures">50. Declined credit request</td>
+<td class="failures">50. В кредите отказано (Негативный сценарий)</td>
 <td class="failures">shouldSendFormWithDeclinedCard()</td>
-<td class="failures">11.070s</td>
+<td class="failures">10.878s</td>
 <td class="failures">failed</td>
 </tr>
 <tr>
-<td class="failures">44. Expiry date in current month</td>
+<td class="failures">44. Отправка формы со сроком действия карты, истекающем в текущем месяце (граничное значение)</td>
 <td class="failures">shouldSendFormWithExpiryDateInCurrentMonth()</td>
-<td class="failures">9.075s</td>
+<td class="failures">2.005s</td>
 <td class="failures">failed</td>
 </tr>
 <tr>
-<td class="failures">45. Expiry date in next month</td>
+<td class="failures">45. Отправка формы со сроком действия карты, истекающем в следующем месяце (выше граничного значения)</td>
 <td class="failures">shouldSendFormWithExpiryDateInNextMonth()</td>
-<td class="failures">10.172s</td>
+<td class="failures">4.460s</td>
 <td class="failures">failed</td>
 </tr>
 <tr>
-<td class="failures">43. Max-1 expiry year</td>
+<td class="failures">43. Отправка формы с годом на 4 года больше текущего (ниже граничного значения)</td>
 <td class="failures">shouldSendFormWithExpiryYearBelowMax()</td>
-<td class="failures">9.937s</td>
+<td class="failures">6.588s</td>
 <td class="failures">failed</td>
 </tr>
 <tr>
-<td class="failures">42. Max expiry year</td>
+<td class="failures">42. Отправка формы с годом на 5 лет больше текущего (граничное значение)</td>
 <td class="failures">shouldSendFormWithMaxExpiryYear()</td>
-<td class="failures">10.196s</td>
+<td class="failures">7.464s</td>
 <td class="failures">failed</td>
 </tr>
 <tr>
-<td class="failures">49. Valid data with zero CVC</td>
+<td class="failures">49. Отправка формы с нулевым кодом CVC/CVV</td>
 <td class="failures">shouldSendFormWithZeroCVC()</td>
-<td class="failures">7.671s</td>
+<td class="failures">3.293s</td>
 <td class="failures">failed</td>
 </tr>
 </table>
@@ -1359,7 +1365,7 @@ Timeout: 10 s.
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 7.1</a> at 20 янв. 2023 г., 18:08:43</p>
+<a href="http://www.gradle.org">Gradle 7.1</a> at 20 янв. 2023 г., 22:56:42</p>
 </div>
 </div>
 </body>

@@ -1,6 +1,5 @@
 package ru.netology.test;
 
-import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.*;
 import ru.netology.helpers.DataHelper;
 import ru.netology.helpers.SQLHelper;
@@ -27,22 +26,17 @@ public class PaymentTest extends TestBase {
 
     @Nested
     class IncreasedTimeout {
-        @BeforeEach
-        void setTimeout() {
-            Configuration.timeout = 10000;
-        }
 
         @Test
-        @DisplayName("1. Payment approved (Happy path)")
+        @DisplayName("1. Оплата одобрена (Позитивный сценарий)")
         void shouldApprovePaymentWithValidData() {
             long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
             long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
 
-            paymentForm.fillTheForm(DataHelper.generateValidCardData(expiryYears));
-            paymentForm.getContinueButton().click();
+            paymentForm.fillForm(DataHelper.generateValidCardData(expiryYears));
+            paymentForm.sendForm();
 
-
-            paymentForm.checkSuccessNotification(); // проверка уведомления в UI
+            paymentForm.checkSuccessNotification(10); // проверка уведомления в UI
 
             // проверки на изменение кол-ва записей в БД (что точно добавилась новая запись)
             assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
@@ -55,15 +49,15 @@ public class PaymentTest extends TestBase {
         }
 
         @Test
-        @DisplayName("2. Max expiry year")
+        @DisplayName("2. Отправка формы с годом на 5 лет больше текущего (граничное значение)")
         void shouldSendFormWithMaxExpiryYear() {
             long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
             long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
 
-            paymentForm.fillTheForm(DataHelper.generateCardDataWithShiftedYearFromCurrent(expiryYears));
-            paymentForm.getContinueButton().click();
+            paymentForm.fillForm(DataHelper.generateCardDataWithShiftedYearFromCurrent(expiryYears));
+            paymentForm.sendForm();
 
-            paymentForm.checkSuccessNotification();
+            paymentForm.checkSuccessNotification(10);
             assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
             assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
             SQLHelper.Payment lastEntry = SQLHelper.getLastEntryFromPaymentsTable();
@@ -72,15 +66,15 @@ public class PaymentTest extends TestBase {
         }
 
         @Test
-        @DisplayName("3. Max-1 expiry year")
+        @DisplayName("3. Отправка формы с годом на 4 года больше текущего (ниже граничного значения)")
         void shouldSendFormWithExpiryYearBelowMax() {
             long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
             long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
 
-            paymentForm.fillTheForm(DataHelper.generateCardDataWithShiftedYearFromCurrent(expiryYears - 1));
-            paymentForm.getContinueButton().click();
+            paymentForm.fillForm(DataHelper.generateCardDataWithShiftedYearFromCurrent(expiryYears - 1));
+            paymentForm.sendForm();
 
-            paymentForm.checkSuccessNotification();
+            paymentForm.checkSuccessNotification(10);
             assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
             assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
             SQLHelper.Payment lastEntry = SQLHelper.getLastEntryFromPaymentsTable();
@@ -90,15 +84,15 @@ public class PaymentTest extends TestBase {
 
 
         @Test
-        @DisplayName("4. Expiry date in current month")
+        @DisplayName("4. Отправка формы со сроком действия карты, истекающем в текущем месяце (граничное значение)")
         void shouldSendFormWithExpiryDateInCurrentMonth() {
             long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
             long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
 
-            paymentForm.fillTheForm(DataHelper.generateCardDataWithShiftedMonthFromCurrent(0));
-            paymentForm.getContinueButton().click();
+            paymentForm.fillForm(DataHelper.generateCardDataWithShiftedMonthFromCurrent(0));
+            paymentForm.sendForm();
 
-            paymentForm.checkSuccessNotification();
+            paymentForm.checkSuccessNotification(10);
             assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
             assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
             SQLHelper.Payment lastEntry = SQLHelper.getLastEntryFromPaymentsTable();
@@ -107,15 +101,15 @@ public class PaymentTest extends TestBase {
         }
 
         @Test
-        @DisplayName("5. Expiry date in next month")
+        @DisplayName("5. Отправка формы со сроком действия карты, истекающем в следующем месяце (выше граничного значения)")
         void shouldSendFormWithExpiryDateInNextMonth() {
             long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
             long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
 
-            paymentForm.fillTheForm(DataHelper.generateCardDataWithShiftedMonthFromCurrent(1));
-            paymentForm.getContinueButton().click();
+            paymentForm.fillForm(DataHelper.generateCardDataWithShiftedMonthFromCurrent(1));
+            paymentForm.sendForm();
 
-            paymentForm.checkSuccessNotification();
+            paymentForm.checkSuccessNotification(10);
             assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
             assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
             SQLHelper.Payment lastEntry = SQLHelper.getLastEntryFromPaymentsTable();
@@ -124,15 +118,15 @@ public class PaymentTest extends TestBase {
         }
 
         @Test
-        @DisplayName("6. Card owner length = 26 symbols (max-1)")
+        @DisplayName("6. Отправка формы с именем владельца длиной 26 символов (включая пробел)")
         void shouldSendFormWithCardOwnerInLessThanMaxSymbols() {
             long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
             long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
 
-            paymentForm.fillTheForm(DataHelper.generateCardDataWithCardOwnerFixedLength(cardOwnerMaxLength - 1, expiryYears));
-            paymentForm.getContinueButton().click();
+            paymentForm.fillForm(DataHelper.generateCardDataWithCardOwnerFixedLength(cardOwnerMaxLength - 1, expiryYears));
+            paymentForm.sendForm();
 
-            paymentForm.checkSuccessNotification();
+            paymentForm.checkSuccessNotification(10);
             assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
             assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
             SQLHelper.Payment lastEntry = SQLHelper.getLastEntryFromPaymentsTable();
@@ -141,15 +135,15 @@ public class PaymentTest extends TestBase {
         }
 
         @Test
-        @DisplayName("7. Card owner max length")
+        @DisplayName("7. Отправка формы с именем владельца длиной 27 символов (включая пробел)")
         void shouldSendFormWithCardOwnerMaxLength() {
             long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
             long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
 
-            paymentForm.fillTheForm(DataHelper.generateCardDataWithCardOwnerFixedLength(cardOwnerMaxLength, expiryYears));
-            paymentForm.getContinueButton().click();
+            paymentForm.fillForm(DataHelper.generateCardDataWithCardOwnerFixedLength(cardOwnerMaxLength, expiryYears));
+            paymentForm.sendForm();
 
-            paymentForm.checkSuccessNotification();
+            paymentForm.checkSuccessNotification(10);
             assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
             assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
             SQLHelper.Payment lastEntry = SQLHelper.getLastEntryFromPaymentsTable();
@@ -158,15 +152,15 @@ public class PaymentTest extends TestBase {
         }
 
         @Test
-        @DisplayName("8. Card owner with hyphen")
+        @DisplayName("8. Отправка формы с с фамилией владельца, содержащим дефис")
         void shouldSendFormWithCardOwnerWithHyphen() {
             long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
             long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
 
-            paymentForm.fillTheForm(DataHelper.generateCardDataWithHyphenCardOwner(expiryYears));
-            paymentForm.getContinueButton().click();
+            paymentForm.fillForm(DataHelper.generateCardDataWithHyphenCardOwner(expiryYears));
+            paymentForm.sendForm();
 
-            paymentForm.checkSuccessNotification();
+            paymentForm.checkSuccessNotification(10);
             assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
             assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
             SQLHelper.Payment lastEntry = SQLHelper.getLastEntryFromPaymentsTable();
@@ -175,15 +169,15 @@ public class PaymentTest extends TestBase {
         }
 
         @Test
-        @DisplayName("9. Valid data with zero CVC")
+        @DisplayName("9. Отправка формы с нулевым кодом CVC")
         void shouldSendFormWithZeroCVC() {
             long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
             long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
 
-            paymentForm.fillTheForm(DataHelper.generateCardDataWithZeroCVC(expiryYears));
-            paymentForm.getContinueButton().click();
+            paymentForm.fillForm(DataHelper.generateCardDataWithZeroCVC(expiryYears));
+            paymentForm.sendForm();
 
-            paymentForm.checkSuccessNotification();
+            paymentForm.checkSuccessNotification(10);
             assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
             assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
             SQLHelper.Payment lastEntry = SQLHelper.getLastEntryFromPaymentsTable();
@@ -192,15 +186,15 @@ public class PaymentTest extends TestBase {
         }
 
         @Test
-        @DisplayName("10. Declined payment")
+        @DisplayName("10. Оплата отклонена")
         void shouldSendFormWithDeclinedCard() {
             long rowsOrdersBefore = SQLHelper.getRowsAmountFrom(ordersTable);
             long rowsPaymentsBefore = SQLHelper.getRowsAmountFrom(paymentsTable);
 
-            paymentForm.fillTheForm(DataHelper.generateCardDataWithDeclinedCard(expiryYears));
-            paymentForm.getContinueButton().click();
+            paymentForm.fillForm(DataHelper.generateCardDataWithDeclinedCard(expiryYears));
+            paymentForm.sendForm();
 
-            paymentForm.checkErrorNotification();
+            paymentForm.checkErrorNotification(10);
             assertEquals(rowsOrdersBefore + 1, SQLHelper.getRowsAmountFrom(ordersTable));
             assertEquals(rowsPaymentsBefore + 1, SQLHelper.getRowsAmountFrom(paymentsTable));
             SQLHelper.Payment lastEntry = SQLHelper.getLastEntryFromPaymentsTable();
@@ -210,292 +204,288 @@ public class PaymentTest extends TestBase {
     }
 
     @Test
-    @DisplayName("11. Empty card number")
+    @DisplayName("11. Отправка формы без номера карты")
     void shouldNotSendFormWithoutCardNumber() {
-        paymentForm.fillTheForm(DataHelper.generateValidCardData(expiryYears));
-        paymentForm.clearField(paymentForm.getCard());
-        paymentForm.getContinueButton().click();
+        paymentForm.fillForm(DataHelper.generateCardDataWithEmptyCard(expiryYears));
+        paymentForm.sendForm();
 
-        paymentForm.checkCardErrorIndication();
+        paymentForm.checkCardNumberError("Неверный формат", 2);
     }
 
     @Test
-    @DisplayName("12. Empty month")
+    @DisplayName("12. Отправка формы без указания месяца")
     void shouldNotSendFormWithoutMonth() {
-        paymentForm.fillTheForm(DataHelper.generateValidCardData(expiryYears));
-        paymentForm.clearField(paymentForm.getMonth());
-        paymentForm.getContinueButton().click();
+        paymentForm.fillForm(DataHelper.generateCardDataWithEmptyMonth(expiryYears));
+        paymentForm.sendForm();
 
-        paymentForm.checkMonthWrongFormatOrEmpty();
+        paymentForm.checkMonthError("Неверный формат",2);
     }
 
     @Test
-    @DisplayName("13. Empty year")
+    @DisplayName("13. Отправка формы без указания года")
     void shouldNotSendFormWithoutYear() {
-        paymentForm.fillTheForm(DataHelper.generateValidCardData(expiryYears));
-        paymentForm.clearField(paymentForm.getYear());
-        paymentForm.getContinueButton().click();
+        paymentForm.fillForm(DataHelper.generateCardDataWithEmptyYear(expiryYears));
+        paymentForm.sendForm();
 
-        paymentForm.checkYearWrongFormatOrEmpty();
+        paymentForm.checkYearError("Неверный формат",2);
     }
 
     @Test
-    @DisplayName("14. Empty card owner")
+    @DisplayName("14. Отправка формы без указания владельца карты")
     void shouldNotSendFormWithoutCardOwner() {
-        paymentForm.fillTheForm(DataHelper.generateValidCardData(expiryYears));
-        paymentForm.clearField(paymentForm.getCardOwner());
-        paymentForm.getContinueButton().click();
+        paymentForm.fillForm(DataHelper.generateCardDataWithEmptyCardOwner(expiryYears));
+        paymentForm.sendForm();
 
-        paymentForm.checkCardOwnerErrorEmpty();
+        paymentForm.checkCardOwnerError("Поле обязательно для заполнения", 2);
     }
 
     @Test
-    @DisplayName("15. Empty CVC/CVV")
+    @DisplayName("15. Отправка формы без указания CVC/CVV кода")
     void shouldNotSendFormWithoutCVC() {
-        paymentForm.fillTheForm(DataHelper.generateValidCardData(expiryYears));
-        paymentForm.clearField(paymentForm.getCvc());
-        paymentForm.getContinueButton().click();
+        paymentForm.fillForm(DataHelper.generateCardDataWithEmptyCVC(expiryYears));
+        paymentForm.sendForm();
 
-        paymentForm.checkCVCErrorIndication();
+        paymentForm.checkCVCError("Неверный формат",2);
     }
 
     @Test
-    @DisplayName("16. Empty form")
+    @DisplayName("16. Отправка пустой формы")
     void shouldNotSendEmptyForm() {
-        paymentForm.getContinueButton().click();
+        paymentForm.sendForm();
 
-        paymentForm.checkCardErrorIndication();
-        paymentForm.checkMonthWrongFormatOrEmpty();
-        paymentForm.checkYearWrongFormatOrEmpty();
-        paymentForm.checkCardOwnerErrorEmpty();
-        paymentForm.checkCVCErrorIndication();
+        paymentForm.checkCardNumberError("Неверный формат",2);
+        paymentForm.checkMonthError("Неверный формат", 2);
+        paymentForm.checkYearError("Неверный формат", 2);
+        paymentForm.checkCardOwnerError("Поле обязательно для заполнения", 2);
+        paymentForm.checkCVCError("Неверный формат", 2);
     }
 
     @Test
-    @DisplayName("17. Incomplete card number")
+    @DisplayName("17. Неполный номер карты")
     void shouldNotSendFormWithIncompleteCardNumber() {
-        paymentForm.fillTheForm(DataHelper.generateCardDataWithIncompleteNumber(expiryYears, cardNumberMaxLength - 1));
-        paymentForm.getContinueButton().click();
+        paymentForm.fillForm(DataHelper.generateCardDataWithIncompleteNumber(expiryYears, cardNumberMaxLength - 1));
+        paymentForm.sendForm();
 
-        paymentForm.checkCardErrorIndication();
+        paymentForm.checkCardNumberError("Неверный формат", 2);
     }
 
     @Test
-    @DisplayName("18. Enter more symbols, than card number length")
+    @DisplayName("18. Ввод номера карты длиной 17 цифр (без отправки формы)")
     void shouldNotEnterMoreSymbolsInCardNumber() {
         String cardNumberExt = DataHelper.generateNumericCode(cardNumberMaxLength + 1);
         String expected = cardNumberExt.substring(0, cardNumberMaxLength);
 
-        paymentForm.fillField(paymentForm.getCard(), cardNumberExt);
-        String actual = paymentForm.getFieldValue(paymentForm.getCard()).replaceAll("\\s+","");
+        paymentForm.fillCard(cardNumberExt);
+        String actual = paymentForm.getCardValue().replaceAll("\\s+","");
 
         assertEquals(expected, actual);
     }
 
     @Test
-    @DisplayName("19. Enter invalid symbols in card number")
+    @DisplayName("19. Ввод в поле для номера карты невалидных символов (без отправки формы)")
     void shouldNotEnterInvalidCardNumber() {
-        paymentForm.fillField(paymentForm.getCard(), DataHelper.getInvalidSymbolsForNumericFields());
-        String actual = paymentForm.getFieldValue(paymentForm.getCard()).replaceAll("\\s+","");
+        paymentForm.fillCard(DataHelper.getInvalidSymbolsForNumericFields());
+        String actual = paymentForm.getCardValue().replaceAll("\\s+","");
 
         assertEquals("", actual);
     }
 
     @Test
-    @DisplayName("20. Card number consists of zeroes")
+    @DisplayName("20. Отправка формы с номером карты, состоящим из нулей")
     void shouldNotSendFormWithZeroCard() {
-        paymentForm.fillTheForm(DataHelper.generateCardDataWithZeroCard(expiryYears));
-        paymentForm.getContinueButton().click();
+        paymentForm.fillForm(DataHelper.generateCardDataWithZeroCard(expiryYears));
+        paymentForm.sendForm();
 
-        paymentForm.checkCardErrorIndication();
+        paymentForm.checkCardNumberError("Неверный формат", 2);
     }
 
     @Test
-    @DisplayName("21. Zero month")
+    @DisplayName("21. Отправка формы с нулевым месяцем")
     void shouldNotSendFormWithZeroMonth() {
-        paymentForm.fillTheForm(DataHelper.generateCardDataWithZeroMonth(expiryYears));
-        paymentForm.getContinueButton().click();
+        paymentForm.fillForm(DataHelper.generateCardDataWithZeroMonth(expiryYears));
+        paymentForm.sendForm();
 
-        paymentForm.checkMonthWrongFormatOrEmpty();
+        paymentForm.checkMonthError("Неверный формат", 2);
     }
 
     @Test
-    @DisplayName("22. Non-existent month")
+    @DisplayName("22. Отправка формы с несуществующим месяцем")
     void shouldNotSendFormWithWrongMonth() {
-        paymentForm.fillTheForm(DataHelper.generateCardDataWithWrongMonth(expiryYears));
-        paymentForm.getContinueButton().click();
+        paymentForm.fillForm(DataHelper.generateCardDataWithWrongMonth(expiryYears));
+        paymentForm.sendForm();
 
-        paymentForm.checkMonthWrongExpiryDate();
+        paymentForm.checkMonthError("Неверно указан срок действия карты", 2);
     }
 
     @Test
-    @DisplayName("23. Incomplete month (only 1 digit)")
+    @DisplayName("23. Отправка формы с месяцем неверного формата: менее 2 цифр")
     void shouldNotSendFormWithIncompleteMonth() {
-        paymentForm.fillTheForm(DataHelper.generateCardDataWithMonthInvalidLength(1, expiryYears));
-        paymentForm.getContinueButton().click();
+        paymentForm.fillForm(DataHelper.generateCardDataWithMonthInvalidLength(1, expiryYears));
+        paymentForm.sendForm();
 
-        paymentForm.checkMonthWrongFormatOrEmpty();
+        paymentForm.checkMonthError("Неверный формат", 2);
     }
 
+    //
     @Test
-    @DisplayName("24. Enter more symbols, than month length")
+    @DisplayName("24. Ввод месяца неверного формата: более 2 цифр (без отправки формы)")
     void shouldNotEnterMoreSymbolsInMonth() {
         String monthExt = DataHelper.generateNumericCode(3);
         String expected = monthExt.substring(0, 2);
 
-        paymentForm.fillField(paymentForm.getMonth(), monthExt);
-        String actual = paymentForm.getFieldValue(paymentForm.getMonth());
+        paymentForm.fillMonth(monthExt);
+        String actual = paymentForm.getMonthValue();
 
         assertEquals(expected, actual);
     }
 
     @Test
-    @DisplayName("25. Enter invalid symbols in month")
+    @DisplayName("25. Ввод в поле месяца невалидных символов (без отправки формы)")
     void shouldNotEnterInvalidSymbolsInMonth() {
-        paymentForm.fillField(paymentForm.getMonth(), DataHelper.getInvalidSymbolsForNumericFields());
-        String actual = paymentForm.getFieldValue(paymentForm.getMonth());
+        paymentForm.fillMonth(DataHelper.getInvalidSymbolsForNumericFields());
+        String actual = paymentForm.getMonthValue();
 
         assertEquals("", actual);
     }
 
     @Test
-    @DisplayName("26. Zero year")
+    @DisplayName("26. Отправка формы с нулевым годом")
     void shouldNotSendFormWithZeroYear() {
-        paymentForm.fillTheForm(DataHelper.generateCardDataWithZeroYear());
-        paymentForm.getContinueButton().click();
+        paymentForm.fillForm(DataHelper.generateCardDataWithZeroYear());
+        paymentForm.sendForm();
 
-        paymentForm.checkYearErrorExpired();
+        paymentForm.checkYearError("Истёк срок действия карты", 2);
     }
 
     @Test
-    @DisplayName("27. Incomplete year")
+    @DisplayName("27. Отправка формы с годом неверного формата: менее 2 цифр")
     void shouldNotSendFormWithIncompleteYear() {
-        paymentForm.fillTheForm(DataHelper.generateCardDataWithYearInvalidLength(1));
-        paymentForm.getContinueButton().click();
+        paymentForm.fillForm(DataHelper.generateCardDataWithYearInvalidLength(1));
+        paymentForm.sendForm();
 
-        paymentForm.checkYearWrongFormatOrEmpty();
+        paymentForm.checkYearError("Неверный формат", 2);
     }
 
     @Test
-    @DisplayName("28. Enter more symbols, than year length")
+    @DisplayName("28. Ввод года неверного формата: более 2 цифр (без отправки формы)")
     void shouldNotEnterMoreSymbolsInYear() {
         String yearExt = DataHelper.generateNumericCode(3);
         String expected = yearExt.substring(0, 2);
 
-        paymentForm.fillField(paymentForm.getYear(), yearExt);
-        String actual = paymentForm.getFieldValue(paymentForm.getYear());
+        paymentForm.fillYear(yearExt);
+        String actual = paymentForm.getYearValue();
 
         assertEquals(expected, actual);
     }
 
     @Test
-    @DisplayName("29. Enter invalid symbols in year")
+    @DisplayName("29. Ввод в поле года невалидных символов (без отправки формы)")
     void shouldNotEnterInvalidSymbolsInYear() {
-        paymentForm.fillField(paymentForm.getYear(), DataHelper.getInvalidSymbolsForNumericFields());
-        String actual = paymentForm.getFieldValue(paymentForm.getYear());
+        paymentForm.fillYear(DataHelper.getInvalidSymbolsForNumericFields());
+        String actual = paymentForm.getYearValue();
 
         assertEquals("", actual);
     }
 
     @Test
-    @DisplayName("30. Previous year (card expired)")
+    @DisplayName("30. Отправка формы с предыдущим годом")
     void shouldNotSendFormWithPrevYear() {
-        paymentForm.fillTheForm(DataHelper.generateCardDataWithShiftedYearFromCurrent(-1));
-        paymentForm.getContinueButton().click();
+        paymentForm.fillForm(DataHelper.generateCardDataWithShiftedYearFromCurrent(-1));
+        paymentForm.sendForm();
 
-        paymentForm.checkYearErrorExpired();
+        paymentForm.checkYearError("Истёк срок действия карты", 2);
     }
 
     @Test
-    @DisplayName("31. More than expiry years")
+    @DisplayName("31. Отправка формы с годом на 6 лет больше текущего")
     void shouldNotSendFormWithMoreThanExpiryYear() {
-        paymentForm.fillTheForm(DataHelper.generateCardDataWithShiftedYearFromCurrent(expiryYears + 1));
-        paymentForm.getContinueButton().click();
+        paymentForm.fillForm(DataHelper.generateCardDataWithShiftedYearFromCurrent(expiryYears + 1));
+        paymentForm.sendForm();
 
-        paymentForm.checkYearWrongExpiryDate();
+        paymentForm.checkYearError("Неверно указан срок действия карты", 2);
     }
 
     @Test
-    @DisplayName("32. Card expired in previous month")
+    @DisplayName("32. Отправка формы с истекшим сроком")
     void shouldNotSendFormWithExpiryDateInPrevMonth() {
-        paymentForm.fillTheForm(DataHelper.generateCardDataWithShiftedMonthFromCurrent(-1));
-        paymentForm.getContinueButton().click();
+        paymentForm.fillForm(DataHelper.generateCardDataWithShiftedMonthFromCurrent(-1));
+        paymentForm.sendForm();
 
-        paymentForm.checkMonthWrongExpiryDate();
+        paymentForm.checkMonthError("Неверно указан срок действия карты", 2);
     }
 
     @Test
-    @DisplayName("33. Incomplete card owner (only one word)")
+    @DisplayName("33. Отправка формы с неполным именем (только одно слово в поле)")
     void shouldNotSendFormWithIncompleteCardOwner() {
-        paymentForm.fillTheForm(DataHelper.generateCardDataWithIncompleteCardOwner(expiryYears));
-        paymentForm.getContinueButton().click();
+        paymentForm.fillForm(DataHelper.generateCardDataWithIncompleteCardOwner(expiryYears));
+        paymentForm.sendForm();
 
-        paymentForm.checkCardOwnerAsWrittenOnCard();
+        paymentForm.checkCardOwnerError("Введите имя и фамилию, как указано на карте", 2);
     }
 
     @Test
-    @DisplayName("34. Cyrillic symbols in card owner")
+    @DisplayName("34. Отправка формы с кирилическими символами  имени владельца")
     void shouldNotSendFormWithCyrillicCardOwner() {
-        paymentForm.fillTheForm(DataHelper.generateCardDataWithInvalidCardOwnerLocale("ru", expiryYears));
-        paymentForm.getContinueButton().click();
+        paymentForm.fillForm(DataHelper.generateCardDataWithInvalidCardOwnerLocale("ru", expiryYears));
+        paymentForm.sendForm();
 
-        paymentForm.checkCardOwnerWrongFormat();
+        paymentForm.checkCardOwnerError("Только латинские символы (A-Z), пробел и дефис", 2);
     }
 
     @Test
-    @DisplayName("35. Invalid symbols in card owner")
+    @DisplayName("35. Отправка формы с невалидными символами в имени владельца")
     void shouldNotSendFormWithInvalidCardOwner() {
-        paymentForm.fillTheForm(DataHelper.generateCardDataWithInvalidCardOwnerSymbols(expiryYears));
-        paymentForm.getContinueButton().click();
+        paymentForm.fillForm(DataHelper.generateCardDataWithInvalidCardOwnerSymbols(expiryYears));
+        paymentForm.sendForm();
 
-        paymentForm.checkCardOwnerWrongFormat();
+        paymentForm.checkCardOwnerError("Только латинские символы (A-Z), пробел и дефис", 2);
     }
 
     @Test
-    @DisplayName("36. Spaces instead of card owner")
+    @DisplayName("36. Отправка формы с пробелами в имени владельца")
     void shouldNotSendFormWithSpacesInCardOwner() {
-        paymentForm.fillTheForm(DataHelper.generateCardDataWithCardOwnerSpaces(expiryYears));
-        paymentForm.getContinueButton().click();
+        paymentForm.fillForm(DataHelper.generateCardDataWithCardOwnerSpaces(expiryYears));
+        paymentForm.sendForm();
 
-        paymentForm.checkCardOwnerErrorEmpty();
+        paymentForm.checkCardOwnerError("Поле обязательно для заполнения", 2);
     }
 
     @Test
-    @DisplayName("37. Card owner length more than 27 symbols")
+    @DisplayName("37. Отправка формы с именем владельца 28 символов (включая пробел)")
     void shouldNotSendFormWithOverlongCardOwner() {
-        paymentForm.fillTheForm(DataHelper.generateCardDataWithCardOwnerFixedLength(cardOwnerMaxLength + 1, expiryYears));
-        paymentForm.getContinueButton().click();
+        paymentForm.fillForm(DataHelper.generateCardDataWithCardOwnerFixedLength(cardOwnerMaxLength + 1, expiryYears));
+        paymentForm.sendForm();
 
-        paymentForm.checkCardOwnerAsWrittenOnCard();
+        paymentForm.checkCardOwnerError("Введите имя и фамилию, как указано на карте", 2);
     }
 
 
     @Test
-    @DisplayName("38. Incomplete CVC")
+    @DisplayName("38. Отправка формы с CVC/CVV неверного формата: менее 3 цифр")
     void shouldNotSendFormWithIncompleteCVC() {
-        paymentForm.fillTheForm(DataHelper.generateCardDataWithCVCInvalidLength(2, expiryYears));
-        paymentForm.getContinueButton().click();
+        paymentForm.fillForm(DataHelper.generateCardDataWithCVCInvalidLength(2, expiryYears));
+        paymentForm.sendForm();
 
-        paymentForm.checkCVCErrorIndication();
+        paymentForm.checkCVCError("Неверный формат", 2);
     }
 
     @Test
-    @DisplayName("39. Enter more symbols, than CVC length")
+    @DisplayName("39. Ввод CVC/CVV неверного формата: более 3 цифр (без отправки формы)")
     void shouldNotEnterMoreSymbolsInCVC() {
         String cvcExt = DataHelper.generateNumericCode(4);
         String expected = cvcExt.substring(0, 3);
 
-        paymentForm.fillField(paymentForm.getCvc(), cvcExt);
-        String actual = paymentForm.getFieldValue(paymentForm.getCvc());
+        paymentForm.fillCVC(cvcExt);
+        String actual = paymentForm.getCVCValue();
 
         assertEquals(expected, actual);
     }
 
     @Test
-    @DisplayName("40. Enter invalid symbols in CVC")
+    @DisplayName("40. Ввод в поле CVC/CVV невалидных символов (без отправки формы)")
     void shouldNotEnterInvalidSymbolsInCVC() {
-        paymentForm.fillField(paymentForm.getCvc(), DataHelper.getInvalidSymbolsForNumericFields());
-        String actual = paymentForm.getFieldValue(paymentForm.getCvc());
+        paymentForm.fillCVC(DataHelper.getInvalidSymbolsForNumericFields());
+        String actual = paymentForm.getCVCValue();
 
         assertEquals("", actual);
     }

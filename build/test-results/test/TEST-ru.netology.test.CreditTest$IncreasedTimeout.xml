@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ru.netology.test.CreditTest$IncreasedTimeout" tests="10" skipped="0" failures="10" errors="0" timestamp="2023-01-20T15:04:16" hostname="Lenovo" time="86.51">
+<testsuite name="ru.netology.test.CreditTest$IncreasedTimeout" tests="10" skipped="0" failures="10" errors="0" timestamp="2023-01-20T19:53:37" hostname="Lenovo" time="64.21">
   <properties/>
-  <testcase name="46. Card owner length = 26 symbols (max-1)" classname="ru.netology.test.CreditTest$IncreasedTimeout" time="7.442">
+  <testcase name="46. Отправка формы с именем владельца длиной 26 символов (включая пробел)" classname="ru.netology.test.CreditTest$IncreasedTimeout" time="2.894">
     <failure message="org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
 	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
 	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
-	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithCardOwnerInLessThanMaxSymbols(CreditTest.java:125)
+	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithCardOwnerInLessThanMaxSymbols(CreditTest.java:119)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -117,14 +117,14 @@
 	at java.base/java.lang.Thread.run(Thread.java:829)
 </failure>
   </testcase>
-  <testcase name="42. Max expiry year" classname="ru.netology.test.CreditTest$IncreasedTimeout" time="10.196">
+  <testcase name="42. Отправка формы с годом на 5 лет больше текущего (граничное значение)" classname="ru.netology.test.CreditTest$IncreasedTimeout" time="7.464">
     <failure message="org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
 	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
 	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
-	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithMaxExpiryYear(CreditTest.java:64)
+	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithMaxExpiryYear(CreditTest.java:58)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -233,14 +233,14 @@
 	at java.base/java.lang.Thread.run(Thread.java:829)
 </failure>
   </testcase>
-  <testcase name="49. Valid data with zero CVC" classname="ru.netology.test.CreditTest$IncreasedTimeout" time="7.671">
+  <testcase name="49. Отправка формы с нулевым кодом CVC/CVV" classname="ru.netology.test.CreditTest$IncreasedTimeout" time="3.293">
     <failure message="org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
 	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
 	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
-	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithZeroCVC(CreditTest.java:170)
+	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithZeroCVC(CreditTest.java:164)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -349,12 +349,11 @@
 	at java.base/java.lang.Thread.run(Thread.java:829)
 </failure>
   </testcase>
-  <testcase name="50. Declined credit request" classname="ru.netology.test.CreditTest$IncreasedTimeout" time="11.07">
-    <failure message="Element should be visible {.notification_status_error}&#10;Element: '&lt;div class=&quot;notification notification_status_error notification_has-closer notification_stick-to_right notification_theme_alfa-on-white&quot; displayed:false&gt;&lt;/div&gt;'&#10;Actual value: visible:false&#10;Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227092648.7.png&#10;Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227092648.7.html&#10;Timeout: 10 s." type="com.codeborne.selenide.ex.ElementShould">Element should be visible {.notification_status_error}
-Element: '&lt;div class=&quot;notification notification_status_error notification_has-closer notification_stick-to_right notification_theme_alfa-on-white&quot; displayed:false&gt;&lt;/div&gt;'
-Actual value: visible:false
-Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227092648.7.png
-Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674227092648.7.html
+  <testcase name="50. В кредите отказано (Негативный сценарий)" classname="ru.netology.test.CreditTest$IncreasedTimeout" time="10.878">
+    <failure message="Element should have exact text 'Ошибка! Банк отказал в проведении операции.' {.notification_status_error/.notification__content}&#10;Element: '&lt;div class=&quot;notification__content&quot; displayed:false&gt;&lt;/div&gt;'&#10;Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244442139.7.png&#10;Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244442139.7.html&#10;Timeout: 10 s." type="com.codeborne.selenide.ex.ElementShould">Element should have exact text 'Ошибка! Банк отказал в проведении операции.' {.notification_status_error/.notification__content}
+Element: '&lt;div class=&quot;notification__content&quot; displayed:false&gt;&lt;/div&gt;'
+Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244442139.7.png
+Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244442139.7.html
 Timeout: 10 s.
 	at com.codeborne.selenide.impl.WebElementSource.checkCondition(WebElementSource.java:121)
 	at com.codeborne.selenide.commands.Should.execute(Should.java:30)
@@ -362,9 +361,9 @@ Timeout: 10 s.
 	at com.codeborne.selenide.commands.Commands.execute(Commands.java:155)
 	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:128)
 	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:80)
-	at com.sun.proxy.$Proxy16.shouldBe(Unknown Source)
-	at ru.netology.pages.FormPage.checkErrorNotification(FormPage.java:55)
-	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithDeclinedCard(CreditTest.java:182)
+	at com.sun.proxy.$Proxy16.shouldHave(Unknown Source)
+	at ru.netology.pages.FormPage.checkErrorNotification(FormPage.java:88)
+	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithDeclinedCard(CreditTest.java:176)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -473,14 +472,14 @@ Timeout: 10 s.
 	at java.base/java.lang.Thread.run(Thread.java:829)
 </failure>
   </testcase>
-  <testcase name="41. Credit approved (Happy path)" classname="ru.netology.test.CreditTest$IncreasedTimeout" time="1.89">
+  <testcase name="41. Кредит одобрен (Позитивный сценарий)" classname="ru.netology.test.CreditTest$IncreasedTimeout" time="8.868">
     <failure message="org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
 	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
 	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
-	at ru.netology.test.CreditTest$IncreasedTimeout.shouldApprovePaymentWithValidData(CreditTest.java:49)
+	at ru.netology.test.CreditTest$IncreasedTimeout.shouldApprovePaymentWithValidData(CreditTest.java:43)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -589,14 +588,14 @@ Timeout: 10 s.
 	at java.base/java.lang.Thread.run(Thread.java:829)
 </failure>
   </testcase>
-  <testcase name="45. Expiry date in next month" classname="ru.netology.test.CreditTest$IncreasedTimeout" time="10.172">
+  <testcase name="45. Отправка формы со сроком действия карты, истекающем в следующем месяце (выше граничного значения)" classname="ru.netology.test.CreditTest$IncreasedTimeout" time="4.46">
     <failure message="org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
 	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
 	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
-	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithExpiryDateInNextMonth(CreditTest.java:110)
+	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithExpiryDateInNextMonth(CreditTest.java:104)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -705,14 +704,14 @@ Timeout: 10 s.
 	at java.base/java.lang.Thread.run(Thread.java:829)
 </failure>
   </testcase>
-  <testcase name="43. Max-1 expiry year" classname="ru.netology.test.CreditTest$IncreasedTimeout" time="9.937">
+  <testcase name="43. Отправка формы с годом на 4 года больше текущего (ниже граничного значения)" classname="ru.netology.test.CreditTest$IncreasedTimeout" time="6.588">
     <failure message="org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
 	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
 	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
-	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithExpiryYearBelowMax(CreditTest.java:79)
+	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithExpiryYearBelowMax(CreditTest.java:73)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -821,14 +820,21 @@ Timeout: 10 s.
 	at java.base/java.lang.Thread.run(Thread.java:829)
 </failure>
   </testcase>
-  <testcase name="47. Card owner max length" classname="ru.netology.test.CreditTest$IncreasedTimeout" time="10.357">
-    <failure message="org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;
-	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
-	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
-	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
-	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
-	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
-	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithCardOwnerMaxLength(CreditTest.java:140)
+  <testcase name="47. Отправка формы с именем владельца длиной 27 символов (включая пробел)" classname="ru.netology.test.CreditTest$IncreasedTimeout" time="10.864">
+    <failure message="Element should have exact text 'Операция одобрена Банком.' {.notification_status_ok/.notification__content}&#10;Element: '&lt;div class=&quot;notification__content&quot; displayed:false&gt;&lt;/div&gt;'&#10;Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244472938.8.png&#10;Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244472938.8.html&#10;Timeout: 10 s." type="com.codeborne.selenide.ex.ElementShould">Element should have exact text 'Операция одобрена Банком.' {.notification_status_ok/.notification__content}
+Element: '&lt;div class=&quot;notification__content&quot; displayed:false&gt;&lt;/div&gt;'
+Screenshot: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244472938.8.png
+Page source: file:/home/serge/netology/qa/qa-netology-diplom/build/reports/tests/1674244472938.8.html
+Timeout: 10 s.
+	at com.codeborne.selenide.impl.WebElementSource.checkCondition(WebElementSource.java:121)
+	at com.codeborne.selenide.commands.Should.execute(Should.java:30)
+	at com.codeborne.selenide.commands.Should.execute(Should.java:14)
+	at com.codeborne.selenide.commands.Commands.execute(Commands.java:155)
+	at com.codeborne.selenide.impl.SelenideElementProxy.dispatchAndRetry(SelenideElementProxy.java:128)
+	at com.codeborne.selenide.impl.SelenideElementProxy.invoke(SelenideElementProxy.java:80)
+	at com.sun.proxy.$Proxy16.shouldHave(Unknown Source)
+	at ru.netology.pages.FormPage.checkSuccessNotification(FormPage.java:83)
+	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithCardOwnerMaxLength(CreditTest.java:131)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -937,14 +943,14 @@ Timeout: 10 s.
 	at java.base/java.lang.Thread.run(Thread.java:829)
 </failure>
   </testcase>
-  <testcase name="48. Card owner with hyphen" classname="ru.netology.test.CreditTest$IncreasedTimeout" time="8.691">
+  <testcase name="48. Отправка формы с именем владельца, содержащим дефис" classname="ru.netology.test.CreditTest$IncreasedTimeout" time="6.889">
     <failure message="org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
 	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
 	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
-	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithCardOwnerWithHyphen(CreditTest.java:155)
+	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithCardOwnerWithHyphen(CreditTest.java:149)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -1053,14 +1059,14 @@ Timeout: 10 s.
 	at java.base/java.lang.Thread.run(Thread.java:829)
 </failure>
   </testcase>
-  <testcase name="44. Expiry date in current month" classname="ru.netology.test.CreditTest$IncreasedTimeout" time="9.075">
+  <testcase name="44. Отправка формы со сроком действия карты, истекающем в текущем месяце (граничное значение)" classname="ru.netology.test.CreditTest$IncreasedTimeout" time="2.005">
     <failure message="org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;APPROVED&gt; but was: &lt;null&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
 	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
 	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
 	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
-	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithExpiryDateInCurrentMonth(CreditTest.java:95)
+	at ru.netology.test.CreditTest$IncreasedTimeout.shouldSendFormWithExpiryDateInCurrentMonth(CreditTest.java:89)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)

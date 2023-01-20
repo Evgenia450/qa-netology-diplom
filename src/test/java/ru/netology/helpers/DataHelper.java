@@ -46,7 +46,7 @@ public class DataHelper {
     }
 
     public static String getCardOwnerWithHyphen() {
-        return "KALINA-NIKOLAY IVANOV";
+        return "IVAN IVANOV-PETROV";
     }
 
     public static String generateCardOwner(String locale) {
@@ -238,6 +238,46 @@ public class DataHelper {
                 generateShiftedYearFromCurrent(random.nextInt(expiryYears) + 1),
                 generateCardOwner("en"),
                 generateNumericCode(3));
+    }
+
+    public static CardData generateCardDataWithEmptyCard(int expiryYears) {
+        return new CardData(null,
+                generateMonth(),
+                generateShiftedYearFromCurrent(random.nextInt(expiryYears) + 1),
+                generateCardOwner("en"),
+                generateNumericCode(3));
+    }
+
+    public static CardData generateCardDataWithEmptyMonth(int expiryYears) {
+        return new CardData(getApprovedCardNumber(),
+                null,
+                generateShiftedYearFromCurrent(random.nextInt(expiryYears) + 1),
+                generateCardOwner("en"),
+                generateNumericCode(3));
+    }
+
+    public static CardData generateCardDataWithEmptyYear(int expiryYears) {
+        return new CardData(getApprovedCardNumber(),
+                generateMonth(),
+                null,
+                generateCardOwner("en"),
+                generateNumericCode(3));
+    }
+
+    public static CardData generateCardDataWithEmptyCardOwner(int expiryYears) {
+        return new CardData(getApprovedCardNumber(),
+                generateMonth(),
+                generateShiftedYearFromCurrent(random.nextInt(expiryYears) + 1),
+                null,
+                generateNumericCode(3));
+    }
+
+    public static CardData generateCardDataWithEmptyCVC(int expiryYears) {
+        return new CardData(getApprovedCardNumber(),
+                generateMonth(),
+                generateShiftedYearFromCurrent(random.nextInt(expiryYears) + 1),
+                generateCardOwner("en"),
+                null);
     }
 
 }
