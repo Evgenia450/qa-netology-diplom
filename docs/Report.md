@@ -18,4 +18,4 @@
 
 По результатам тестирования:
 
-- добавлены 8 баг-репортов ([в разделе Issues (фильтр по лейблу bug)](https://github.com/Evgenia450/qa-netology-diplom/issues?q=is%3Aopen+is%3Aissue+label%3Abug)
+- добавлены 8 баг-репортов ([в разделе Issues ](https://github.com/Evgenia450/qa-netology-diplom/issues)
